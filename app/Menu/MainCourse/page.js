@@ -6,7 +6,8 @@ import { db } from "../../../firebase"
 const page = () => {
   const [items, setItems] = useState([])
   const [selectedItems, setSelectedItems] = useState([])
-  const [selectedmc, setSelectedMC] = useState([])
+  const [tableno, setTableNo] = useState('')
+  const [semiTotal, setSemiTotal] = useState(0)
   const [mainCourse, setMainCourse] = useState([])
   useEffect(() => {
     const q = query(collection(db, 'items'))
@@ -16,31 +17,46 @@ const page = () => {
         itemsArr.push({ ...doc.data(), id: doc.id })
       })
       setItems(itemsArr);
-      console.log(itemsArr)
       let result = itemsArr.filter(item => item.category === 'MainCourse')
       setMainCourse(result)
     })
-
   }, [])
 
+  useEffect(() => {
+    console.log(semiTotal)
+  }, [semiTotal])
+
+  
   const selectItems = (item) => {
-    setSelectedMC((prevItems) => [...prevItems, item])
-    // console.log(selectedDesserts)
+    let newName = item.name;
+    let newPrice = item.price;
+    setSemiTotal((prevSemiTotal) =>  prevSemiTotal + parseFloat(newPrice))
+    // let newItem={item.name, item.price}
+    setSelectedItems((prevItems) => [...prevItems, { newName, newPrice }])
+    console.log(selectedItems)
   }
 
   const placeOrder = async () => {
+    let ins = []
     // console.log(ins);
-    const docRef = await addDoc(collection(db, "mc-orders"), {
-      selectedmc
-    })
-    setSelectedMC([])
-    alert("Go to orders page to place your order");
-    console.log("Document written with ID: ", docRef.id);
+    if (tableno !== '') {
+      const docRef = await addDoc(collection(db, "selectedItems"), {
+        selectedItems,
+        tableno: tableno,
+        semiTotal:semiTotal
+      })
+      alert("Order has been placed");
+      console.log("Document written with ID: ", docRef.id);
+    } else {
+      alert("Please enter table number")
+    }
+    // setSelectedMainCourse([])
   }
 
   return (
     <div>
       <h1 className="text-center text-3xl uppercase p-4 bg-amber-600 text-white">Main Course</h1>
+      <div className='absolute top-5 right-5 text-white pl-4 border-l-2 border-slate-50'><a href='/Orders'>Go to orders</a></div>
       <div className='sticky top-0 '>
         <img src='\images\maincourse.jpg' className='-z-1 absolute top-0 opacity-40' />
       </div>
@@ -71,15 +87,21 @@ const page = () => {
         }
       </ul>
       <div className='border-l-2 border-orange-700 p-4 bg-orange-700/35 mr-0 w-1/5 h-lvh sticky top-0'>
-        {
-          (selectedmc.length) === 0 ? <div className='p-8'>Added items will appear here</div> : <><div className='text-3xl text-center'>ADDED ITEMS</div> <ul className='flex justify-center items-center flex-col'>
-            {selectedmc.map((selected, index) => (
-              <li className='block text-2xl'>{selected.name}<span className='text-lg'>(&#8377;{selected.price})</span></li>
-            ))}
-            <button onClick={placeOrder} className='p-2 m-4 border-2 border-slate-800 rounded-lg bg-orange-700/55 transition duration-200 hover:scale-110'>Push to Orders</button>
-          </ul>
-          </>
-        }
+      {
+            (selectedItems.length) === 0 ? <div className='p-8'>Added items will appear here</div> :
+              <>
+                <div className='text-3xl text-center'>ADDED ITEMS</div>
+                <ul className='flex justify-center items-center flex-col'>
+                  {selectedItems.map((selectedItems, index) => (
+                    <li className='block text-2xl' key={index}>{selectedItems.newName}<span>(&#8377;{selectedItems.newPrice})</span></li>
+                  ))}
+                </ul>
+                <div className='flex flex-col justify-center items-center'>
+                  <input type='number' value={tableno} onChange={(e) => setTableNo(e.target.value)} placeholder='PLEASE ENTER TABLE NUMBER' className='p-2 w-max m-4 border-2 rounded-lg bg-slate-950 text-white' />
+                  <button onClick={placeOrder} className='p-2 m-4 border-2 border-slate-950 rounded-lg bg-amber-950/55 transition duration-200 hover:scale-110'>Place Order</button>
+                </div>
+              </>
+          }
       </div>
       </div> 
     </div>

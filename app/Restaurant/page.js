@@ -9,6 +9,7 @@ const page = () => {
             <div className='grid place-items-center'>
                 <a href='/Restaurant/addItems' className='uppercase'>Add New Items</a>
                 <a href='/Restaurant/Items' className='uppercase'>Items</a>
+                <a href='/Restaurant/orders' className='uppercase'>Orders</a>
             </div>
         </main>
     )

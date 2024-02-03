@@ -8,6 +8,7 @@ const page = () => {
   const [items, setItems] = useState([])
   const [desserts, setDesserts] = useState([])
   const [tableno, setTableNo] = useState('')
+  const [semiTotal, setSemiTotal] = useState(0)
   useEffect(() => {
     const q = query(collection(db, 'items'))
     onSnapshot(q, (querySnapshot) => {
@@ -22,15 +23,16 @@ const page = () => {
   }, [])
 
   useEffect(() => {
-    console.log(selectedItems)
-  }, [selectedItems])
+    console.log(semiTotal)
+  }, [semiTotal])
 
 
   const selectItems = (item) => {
-    let newName=item.name;
-    let newPrice=item.price;
+    let newName = item.name;
+    let newPrice = item.price;
+    setSemiTotal((prevSemiTotal) =>  prevSemiTotal + parseFloat(newPrice))
     // let newItem={item.name, item.price}
-    setSelectedDesserts((prevItems) => [...prevItems, {newName, newPrice}])
+    setSelectedDesserts((prevItems) => [...prevItems, { newName, newPrice }])
     console.log(selectedItems)
   }
 
@@ -40,9 +42,10 @@ const page = () => {
     if (tableno !== '') {
       const docRef = await addDoc(collection(db, "selectedItems"), {
         selectedItems,
-        tableno: tableno
+        tableno: tableno,
+        semiTotal:semiTotal
       })
-      // alert("Go to orders page to place your order");
+      alert("Order has been placed");
       console.log("Document written with ID: ", docRef.id);
     } else {
       alert("Please enter table number")
@@ -85,16 +88,19 @@ const page = () => {
         </ul>
         <div className='border-l-2 border-amber-950 p-4 bg-amber-900/35 mr-0 w-1/5 h-lvh sticky top-0'>
           {
-            (selectedItems.length) === 0 ? <div className='p-8'>Added items will appear here</div> : <><div className='text-3xl text-center'>ADDED ITEMS</div> <ul className='flex justify-center items-center flex-col'>
-              {selectedItems.map((selectedItems, index) => (
-                <li className='block text-2xl' key={index}>{selectedItems.newName}<span>(&#8377;{selectedItems.newPrice})</span></li>
-              ))}
-            </ul>
-              <div className='flex flex-col justify-center items-center'>
-                <input type='number' value={tableno} onChange={(e) => setTableNo(e.target.value)} placeholder='PLEASE ENTER TABLE NUMBER' className='p-2 w-max m-4 border-2 rounded-lg bg-slate-950 text-white' />
-                <button onClick={placeOrder} className='p-2 m-4 border-2 border-slate-950 rounded-lg bg-amber-950/55 transition duration-200 hover:scale-110'>Place Order</button>
-              </div>
-            </>
+            (selectedItems.length) === 0 ? <div className='p-8'>Added items will appear here</div> :
+              <>
+                <div className='text-3xl text-center'>ADDED ITEMS</div>
+                <ul className='flex justify-center items-center flex-col'>
+                  {selectedItems.map((selectedItems, index) => (
+                    <li className='block text-2xl' key={index}>{selectedItems.newName}<span>(&#8377;{selectedItems.newPrice})</span></li>
+                  ))}
+                </ul>
+                <div className='flex flex-col justify-center items-center'>
+                  <input type='number' value={tableno} onChange={(e) => setTableNo(e.target.value)} placeholder='PLEASE ENTER TABLE NUMBER' className='p-2 w-max m-4 border-2 rounded-lg bg-slate-950 text-white' />
+                  <button onClick={placeOrder} className='p-2 m-4 border-2 border-slate-950 rounded-lg bg-amber-950/55 transition duration-200 hover:scale-110'>Place Order</button>
+                </div>
+              </>
           }
         </div>
       </div>

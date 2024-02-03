@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { collection, doc, deleteDoc, addDoc, query, querySnapshot, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase"
+import { db } from "../../../firebase"
 import Header from '@/components/Header';
 
 const page = () => {
@@ -19,19 +19,9 @@ const page = () => {
         })
         setOrders(ordersArr);
         console.log(ordersArr[0].selectedItems)
-        // let result = itemsArr.filter(item => item.category === 'Desserts')
-        // setDesserts(result)
       })
     }
     fetch();
-    // const m = query(collection(db, 'mc-orders'))
-    // onSnapshot(m, (querySnapshot) => {
-    //   let ordersArr = []
-    //   querySnapshot.forEach((doc) => {
-    //     ordersArr.push({ ...doc.data(), id: doc.id })
-    //   })
-    //   setMainCourse(ordersArr);
-    // })
   }, [])
 
   const handleServed = async(id) => {
