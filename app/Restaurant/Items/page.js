@@ -30,7 +30,7 @@ const page = () => {
                                 <p className='text-blue-600'>Calories: {items.calories}cal.</p>
                                 <p className='text-rose-600'>Price: &#8377;{items.price}</p>
                             </div>
-                            <img src={items.imgsrc} alt='img' className='h-full w-52 p-0 absolute right-0 top-0 rounded-r-lg ' />
+                            <img src={items.link} alt='img' className='h-full w-52 p-0 absolute right-0 top-0 rounded-r-lg ' />
                         </div>
                     ))
                 }

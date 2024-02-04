@@ -45,6 +45,12 @@ const page = () => {
         tableno: tableno,
         semiTotal:semiTotal
       })
+      await addDoc(collection(db, `${tableno}`), {
+        selectedItems,
+        tableno: tableno,
+        semiTotal: semiTotal
+      })
+      setSelectedItems([])
       alert("Order has been placed");
       console.log("Document written with ID: ", docRef.id);
     } else {
@@ -104,6 +110,8 @@ const page = () => {
           }
       </div>
       </div> 
+      <a href='/Menu/Starters' className='absolute top-1/2 left-2 bg-slate-300/30 text-5xl rounded-full px-2 z-999999'>&lt;</a>
+      <a href='/Menu/Chaats' className='absolute top-1/2 right-2 bg-slate-300/30 text-5xl rounded-full px-2 z-999999'>&gt;</a>
     </div>
   )
 }

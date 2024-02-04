@@ -30,7 +30,7 @@ const page = () => {
   const selectItems = (item) => {
     let newName = item.name;
     let newPrice = item.price;
-    setSemiTotal((prevSemiTotal) =>  prevSemiTotal + parseFloat(newPrice))
+    setSemiTotal((prevSemiTotal) => prevSemiTotal + parseFloat(newPrice))
     // let newItem={item.name, item.price}
     setSelectedDesserts((prevItems) => [...prevItems, { newName, newPrice }])
     console.log(selectedItems)
@@ -43,8 +43,14 @@ const page = () => {
       const docRef = await addDoc(collection(db, "selectedItems"), {
         selectedItems,
         tableno: tableno,
-        semiTotal:semiTotal
+        semiTotal: semiTotal
       })
+      await addDoc(collection(db, `${tableno}`), {
+        selectedItems,
+        tableno: tableno,
+        semiTotal: semiTotal
+      })
+      setSelectedDesserts([])
       alert("Order has been placed");
       console.log("Document written with ID: ", docRef.id);
     } else {
@@ -60,6 +66,10 @@ const page = () => {
       <div className='sticky top-0 '>
         <img src='\images\desserts.jpg' className='-z-1 absolute top-0 opacity-40 w-full' />
       </div>
+      {/* <div className='absolute top-0 w-full h-full'>
+        <a href='/Menu/Chaats' className='sticky top-1/2 left-2 bg-slate-300/30 text-5xl rounded-full px-2'>&lt;</a>
+        <a href='/Menu/Drinks' className='sticky top-1/2 left-full bg-slate-300/30 text-5xl rounded-full px-2 z-999999'>&gt;</a>
+      </div> */}
       <div className='flex'>
         <ul className='w-4/5'>
           {
@@ -104,6 +114,8 @@ const page = () => {
           }
         </div>
       </div>
+      <a href='/Menu/Chaats' className='absolute top-1/2 left-2 bg-slate-300/30 text-5xl rounded-full px-2'>&lt;</a>
+      <a href='/Menu/Drinks' className='absolute top-1/2 right-2 bg-slate-300/30 text-5xl rounded-full px-2'>&gt;</a>
     </div>
   )
 }

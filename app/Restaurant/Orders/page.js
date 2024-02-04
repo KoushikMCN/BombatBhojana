@@ -18,7 +18,6 @@ const page = () => {
           ordersArr.push({ ...doc.data(),  id: doc.id })
         })
         setOrders(ordersArr);
-        console.log(ordersArr[0].selectedItems)
       })
     }
     fetch();
@@ -32,7 +31,9 @@ const page = () => {
   return (
     <div>
       <Header />
-      <ul>
+      {
+        (orders.length)>0?
+        <ul>
         {
           orders.map((order, index) => (
             <li key={index} className='relative flex m-4 p-10 border-b-2 border-r-2 border-orange-600 rounded-xl bg-amber-600/30'>
@@ -48,7 +49,9 @@ const page = () => {
             </li>
           ))
         }
-      </ul>
+      </ul>:
+      <h1 className='text-2xl text-center font-extrabold text-sky-900'>No Orders to Display</h1>
+      }
     </div>
   )
 }

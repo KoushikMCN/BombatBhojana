@@ -1,10 +1,11 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { collection, doc, getDocs, addDoc, query, querySnapshot, onSnapshot, where, sum } from "firebase/firestore";
-import { db } from "../../firebase"
+import { collection, doc, getDocs, deleteDoc, query, querySnapshot, onSnapshot, where, sum } from "firebase/firestore";
+import { db, firestore } from "../../firebase"
 import Header from '@/components/Header';
 
 const page = () => {
+  const tdoc = doc;
   // const [selectedDesserts, setSelectedItems] = useState([])
   const [items, setItems] = useState([])
   const [tableno, setTableNo] = useState('')
@@ -13,30 +14,37 @@ const page = () => {
   useEffect(() => {
   }, [])
 
-  // useEffect(() => {
-  //   console.log(items)
-  //   items.selectedItems.map((item)=>calculateTotal(item.newPrice))
-  // }, [items])
 
-  // useEffect(() => {
-  //   console.log(total)
-  // }, [total])
+  const deleteCollection = async () => {
+    const q = query(collection(db, `${tableno}`))
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach(async(doc) => {
+        await deleteDoc(tdoc(db, `${tableno}`, doc.id))
+      })
+    })
+    alert("ORDER CLEARED")
+    window.location.href='/Orders'
+  }
 
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(tableno)
-    const q = query(collection(db, 'selectedItems'), where("tableno", "==", tableno));
+    const q = query(collection(db, `${tableno}`));
     const result = await getDocs(q)
     const res = result.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     console.log(res)
     setItems(res)
-    const calculateTotal = () => {
-      const tp = res.reduce((sum, item) => sum + parseFloat(item.semiTotal), 0)
-      setTotal(tp)
+    if(res.length===0){
+      alert("Invalid table number.\nOR\nOrder Cleared")
+    }else{
+      const calculateTotal = () => {
+        const tp = res.reduce((sum, item) => sum + parseFloat(item.semiTotal), 0)
+        setTotal(tp)
+      }
+      calculateTotal();
     }
-    calculateTotal();
 
   }
 
@@ -77,6 +85,9 @@ const page = () => {
               }
             </div>
             <div className='text-center text-2xl uppercase relative'><span className='p-4 m-4'>Total:</span><span className='p-4 m-4'>{total}</span></div>
+          </div>
+          <div className='flex justify-center items-center'>
+            <button onClick={() => deleteCollection()} className='p-2 m-4 bg-sky-700 border-2 rounded-lg border-sky-950'>Pay Bill and Clear Order</button>
           </div>
         </div>
       }

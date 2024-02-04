@@ -23,6 +23,7 @@ const page = () => {
                 setnewItem({ category: "", name: "", price: '', calories: '' })
                 alert("Added Items");
                 console.log("Document written with ID: ", docRef.id);
+                // window.location.href = '/Restaurant/Items'
             }
             else {
                 alert('Please fill all fields');
@@ -30,7 +31,6 @@ const page = () => {
         } catch (e) {
             console.error("Adding document failed:" + e)
         }
-        window.location.href = '/Restaurant/Items'
     }
 
     return (

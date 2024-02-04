@@ -35,7 +35,7 @@ const Menu = () => {
                         <p className='text-xl text-center uppercase p-3'>Drinks</p></a>
                 </div>
             </div>
-            <button className='p-4 border-2 border-slate-500 rounded-xl m-4 mx-auto bg-purple-700 w-max'><a href='../Bill'>YOUR BILL</a></button>
+            {/* <button className='p-4 border-2 border-slate-500 rounded-xl m-4 mx-auto bg-purple-700 w-max'><a href='../Bill'>YOUR BILL</a></button> */}
         </div>
     )
 }
