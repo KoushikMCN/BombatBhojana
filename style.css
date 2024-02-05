@@ -1,0 +1,263 @@
+/* CSS Reset  */
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+/* Variables */
+:root{
+    --textcolor: black;
+}
+
+.div-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#order{
+    border: 2px solid black;
+    background-color: rgba(133, 222, 255, 0.717);
+    border-radius: 6px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    width: max-content;
+    padding: 4px;
+    margin:  8px;
+}
+
+/* Navigation */
+#navbar{
+    display: flex;
+    align-items: center;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.455);
+}
+header{
+    position: sticky;
+    top:0;
+}
+
+/* #navbar::before{
+    content: " ";
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 70px;
+    z-index: -1;
+    background-color: grey;
+    opacity: 0.6;
+} */
+
+#navbar img{
+    height: 60px;
+    padding: 5px 34px;
+}
+
+#navul{
+    display: flex;
+    align-items: center;
+}
+
+#navul li{
+    list-style: none;
+    transition: all 0.35s ease-in-out;
+}
+
+#navul li a{
+    text-decoration: none;
+    color: var(--textcolor);
+    padding: 12px 22px;
+    margin: 22px;
+    border-radius: 7px;
+}
+#navul li a:hover{
+    background-color: rgba(0, 0, 0, 0.355);
+    
+}
+
+#navul li:hover{
+    transform: scale(1.05);
+}
+
+/* Home Section */
+#home-section::before{
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: url("https://assets.cntraveller.in/photos/651e65983734f323ef3d37fe/16:9/w_7936,h_4464,c_limit/SWING-9.jpg") no-repeat center center/cover;
+    width: 100%;
+    height: 400px;
+    z-index: -1;
+    opacity: 0.58;
+}
+#home-section{
+    margin: 25px 25px;
+    padding: 25px 15px;
+    height: 233px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#homepara{
+    padding: 10px 18px;
+}
+#home-section .btn{
+    display: block;
+    margin: 12px auto;
+}
+
+/* About Us */
+#aboutus-section{
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+}
+#aboutus{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.aboutitem{
+    box-sizing: border-box;
+    width: 30%;
+    border: 3px solid;
+    border-radius: 5px;
+    margin: 25px;
+    padding: 20px;
+}
+.aboutitem h2{
+    margin: 10px;    
+}
+
+/* Our Trainers */
+#ourtrainers-section{
+    display: flex;
+    flex-direction: column;
+}
+#ourtrainers-section img{
+    height: 40px;
+    border-radius: 111px;
+}
+#ourtrainers{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.trainer{
+    display: flex;
+    flex-direction: column;
+    border: 3px solid rgb(57, 0, 0);
+    margin: 25px;
+    border-radius: 5px;
+    padding: 25px;
+}
+#ourtrainers .name{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.trainer>.name>h2{
+    font-size: 1.5rem;
+}
+
+/* Contact Us */
+#contactus-section{
+    display: flex;
+    flex-direction: column;
+    height: 350px;
+    position: relative;
+    padding-top: 15px;
+}
+#contactus-section::before{
+    content: " ";
+    position: absolute;
+    background: url("https://www.immigration.ca/wp-content/uploads/2020/04/contact_us_279387361-scaled.jpeg") no-repeat center center/cover;
+    width: 100%;
+    height: 400px;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+    opacity: 0.4;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+#contactus>a{
+    font-weight: bolder;
+}
+
+#contactus{
+    display: flex;
+    flex-direction: column;
+}
+#contactform{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+#contactform input{
+    width: 300px;
+    margin: 12px;
+    padding: 12px;
+    border-radius: 5px;
+}
+#contactform .btn{
+    width: 150px;
+    margin: auto;
+    margin-top: 15px;
+}
+
+/* Footer */
+footer
+{
+    background-color: rgb(68, 68, 68);
+
+    margin-top: 35px;
+}
+#footer{
+    padding: 7px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+footer img{
+    margin: 0px 65px;
+    height: 30px;
+}
+    
+/* Utility classes */
+.h-primary{
+    font-size: 2.3rem;
+    font-family: 'Oswald', sans-serif;
+}
+.h-secondary{
+    font-size: 1.8rem;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.center{
+    text-align: center;
+}
+
+.btn{
+    background-color: rgba(76, 76, 76, 0.608);
+    border: 2px solid black;
+    font-size: 1.2rem;
+    border-radius: 6px;
+    padding: 3px 8px;
+}
+
+.btn:hover{
+    background-color: rgba(59, 59, 59, 0.8);
+}
